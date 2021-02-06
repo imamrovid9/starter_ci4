@@ -21,7 +21,7 @@ class LoginFilter implements FilterInterface
 	 *
 	 * @return mixed
 	 */
-	public function before(RequestInterface $request)
+	public function before(RequestInterface $request, $arguments = NULL )
 	{
 		if (! function_exists('logged_in'))
 		{
@@ -61,7 +61,7 @@ class LoginFilter implements FilterInterface
 	 *
 	 * @return mixed
 	 */
-	public function after(RequestInterface $request, ResponseInterface $response)
+	public function after(RequestInterface $request, ResponseInterface $response,  $arguments = NULL)
 	{
 
 	}

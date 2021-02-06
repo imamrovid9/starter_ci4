@@ -36,6 +36,11 @@
                             <input type="password" name="pass_confirm" class="form-control <?php if(session('errors.pass_confirm')) : ?>is-invalid<?php endif ?>" placeholder="<?=lang('Auth.repeatPassword')?>" autocomplete="off">
                         </div>
 
+                        <label for="pass_confirm">Akun Type</label>
+                        <select class="custom-select custom-select mb-3" name="akun_type">
+                            <option selected value="pelamar">Pelamar</option>
+                            <option value="perusahaan">Perusahaan</option>
+                        </select>
                         <br>
 
                         <button type="submit" class="btn btn-primary btn-block"><?=lang('Auth.register')?></button>

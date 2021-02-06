@@ -30,12 +30,29 @@ $routes->setAutoRoute(true);
  * --------------------------------------------------------------------
  */
 
+
+$routes->group('pelamar', ['filter' => 'role:pelamar'], function($routes) {
+	$routes->get('/', 'Pelamar::index');
+	$routes->get('home', 'Pelamar::index');
+	$routes->get('/index.php/pelamar', 'Pelamar::index');
+});
+
+$routes->group('perusahaan', ['filter' => 'role:perusahaan'], function($routes) {
+	$routes->get('/', 'Perusahaan::index');
+	$routes->get('home', 'Perusahaan::index');
+	$routes->get('/index.php/perusahaan', 'Perusahaan::index');
+});
+
+// $routes->get('/pelamar', 'Pelamar::index', ['filter' => 'role:pelamar']);
+// $routes->get('index.php/pelamar', 'Pelamar::index', ['filter' => 'role:pelamar']);
+
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
-$routes->group('', ['filter' => 'login'], function($routes){
-    $routes->get('home', 'Home::home');
-})
+// $routes->group('', ['filter' => 'login'], function($routes){
+//     $routes->get('home', 'Home::home');
+// });
+
+
 
 /*
  * --------------------------------------------------------------------

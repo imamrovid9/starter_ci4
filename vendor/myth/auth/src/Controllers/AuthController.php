@@ -22,7 +22,6 @@ class AuthController extends Controller
 		// Most services in this controller require
 		// the session to be started - so fire it up!
 		$this->session = service('session');
-
 		$this->config = config('Auth');
 		$this->auth = service('authentication');
 	}
@@ -92,9 +91,17 @@ class AuthController extends Controller
 		{
 			return redirect()->to(route_to('reset-password') .'?token='. $this->auth->user()->reset_hash)->withCookies();
 		}
-
-		$redirectURL = session('redirect_url') ?? '/';
-		unset($_SESSION['redirect_url']);
+		
+		// if(session('redirect_url')){
+		// 	$redirectURL = session('redirect_url');
+		// }
+		if(in_groups('pelamar')){
+			$redirectURL =  site_url('../pelamar');
+		}
+		elseif(in_groups('perusahaan')){
+			$redirectURL =  site_url('../perusahaan');
+		}
+		// unset($_SESSION['redirect_url']);
 
 		return redirect()->to($redirectURL)->withCookies()->with('message', lang('Auth.loginSuccess'));
 	}
@@ -109,7 +116,7 @@ class AuthController extends Controller
 			$this->auth->logout();
 		}
 
-		return redirect()->to('/');
+		return redirect()->to('/login');
 	}
 
 	//--------------------------------------------------------------------
@@ -121,7 +128,8 @@ class AuthController extends Controller
 	 */
 	public function register()
 	{
-        // check if already logged in.
+		// check if already logged in.
+		
 		if ($this->auth->check())
 		{
 			return redirect()->back();
@@ -141,6 +149,7 @@ class AuthController extends Controller
 	 */
 	public function attemptRegister()
 	{
+		// dd($this->request->getVar());
 		// Check if registration is allowed
 		if (! $this->config->allowRegistration)
 		{
@@ -156,6 +165,7 @@ class AuthController extends Controller
 			'email'			=> 'required|valid_email|is_unique[users.email]',
 			'password'	 	=> 'required|strong_password',
 			'pass_confirm' 	=> 'required|matches[password]',
+			'akun_type' 	=> 'required',
 		];
 
 		if (! $this->validate($rules))
@@ -172,7 +182,11 @@ class AuthController extends Controller
 		// Ensure default group gets assigned if set
         if (! empty($this->config->defaultUserGroup)) {
             $users = $users->withGroup($this->config->defaultUserGroup);
-        }
+        }elseif($this->request->getVar('akun_type') == 'pelamar'){
+			$users = $users->withGroup('pelamar');
+		}elseif($this->request->getVar('akun_type') == 'perusahaan'){
+			$users = $users->withGroup('perusahaan');
+		}
 
 		if (! $users->save($user))
 		{
