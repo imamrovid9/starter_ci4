@@ -11,19 +11,21 @@
                 <li class="menu-title">Lowongan</li>
                 <!-- . user()->username -->
                 <li>
-                    <a href="<?= base_url('/pelamar'); ?>">
+                    <a href="<?= base_url('/perusahaan'); ?>">
                         <i class="dripicons-meter"></i>
-                        <span>List Lowongan</span>
+                        <span>Lowongan Perusahaan</span>
                     </a>
                 </li>
 
-                <li class="menu-title">Profile</li>
+                <li class="menu-title">Profile Perusahaan</li>
                 <li>
-                    <a href="<?= base_url('/pelamar/profile/' . user()->username . ''); ?>">
+                    <a href="<?= base_url('/perusahaan/profile/' . user()->username . ''); ?>">
                         <i class=" fa fa-user"></i>
                         <span> Profile </span>
                     </a>
                 </li>
+
+
 
             </ul>
 
